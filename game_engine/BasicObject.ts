@@ -3,11 +3,10 @@
  * Basis for all things represented in the game
  * Specific game object classes must extend this 
  */
-import { entity, Game } from "./Game";
+import { entity, Game, Position } from "./Game";
 
 export abstract class BasicObject implements entity {
-    protected x: number;
-    protected y: number;
+    protected pos : Position;
     protected width: number;
     protected height: number;
     protected destroyFlag: boolean = false;
@@ -21,17 +20,16 @@ export abstract class BasicObject implements entity {
      * @param height 
      */
     constructor(x: number, y: number, width: number, height: number) {
-        this.x = x;
-        this.y = y;
+        this.pos = { x:x, y:y};
         this.width = width;
         this.height = height;
     }
 
     getX(): number {
-        return this.x;
+        return this.pos.x;
     }
     getY(): number {
-        return this.y;
+        return this.pos.y;
     }
     getWidth(): number {
         return this.width;
@@ -49,7 +47,7 @@ export abstract class BasicObject implements entity {
     }
 
     /**
-     * Updates the state of the obejct
+     * Updates the state of the object
      * @param game 
      * @param dt 
      */

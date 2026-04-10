@@ -33,3 +33,8 @@ export type GameOptions = {
     onGameOver: (gameOver:GameState) => void;
     lives: number;
 }
+
+export type Position = {
+    x : number,
+    y : number,
+};
