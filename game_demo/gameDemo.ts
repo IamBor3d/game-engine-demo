@@ -33,7 +33,9 @@ export class GameDemo extends BaseGame
 
         this.objects.forEach(e=> e.update(this,dt));
         this.objects.forEach(e => e.draw(this.ctx));
+        this.grid?.update()
         this.grid?.drawGrid(this.ctx)
+
         requestAnimationFrame(this.loop);
     }
 

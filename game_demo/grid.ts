@@ -11,33 +11,17 @@ export class Grid {
     private nodeSize = 10;
     private worldSizeX: number;
     private worldSizeY: number;
+    private entities : BasicObject[]
 
     constructor(worldSizeX: number, worldSizeY: number, entities: BasicObject[]) {
         this.worldSizeX = worldSizeX;
         this.worldSizeY = worldSizeY;
-
+        this.entities = entities;
         // Calculate grid dimensions based on world size and node size
         this.gridSizeX = Math.round(worldSizeX / this.nodeSize);
         this.gridSizeY = Math.round(worldSizeY / this.nodeSize);
 
-        for (let x = 0; x < this.gridSizeX; x++) {
-            this.grid[x] = [];
-            for (let y = 0; y < this.gridSizeY; y++) {
-                this.grid[x][y] = { walkable: true };
-            }
-        }
 
-        // Mark nodes as unwalkable based on entity positions
-        for (const entity of entities) {
-            for(let i = entity.getX(); i < entity.getX() + entity.getWidth(); i +=10)
-            {
-                for(let j = entity.getY(); j < entity.getY() + entity.getHeight(); j += 10)
-                {
-                    this.GridPositionFromWorld(i, j);
-                }
-            }
-            
-        }
     }
 
     GridPositionFromWorld(x: number, y: number) {
@@ -52,6 +36,28 @@ export class Grid {
         // Ensure indices are within bounds before accessing
         if (nodeX >= 0 && nodeX < this.gridSizeX && nodeY >= 0 && nodeY < this.gridSizeY) {
             this.grid[nodeX][nodeY] = { walkable: false };
+        }
+    }
+
+    update()
+    {   
+        for (let x = 0; x < this.gridSizeX; x++) {
+            this.grid[x] = [];
+            for (let y = 0; y < this.gridSizeY; y++) {
+                this.grid[x][y] = { walkable: true };
+            }
+        }
+        
+        // Mark nodes as unwalkable based on entity positions
+        for (const entity of this.entities) {
+            for(let i = entity.getX(); i < entity.getX() + entity.getWidth(); i +=10)
+            {
+                for(let j = entity.getY(); j < entity.getY() + entity.getHeight(); j += 10)
+                {
+                    this.GridPositionFromWorld(i, j);
+                }
+            }
+            
         }
     }
 
