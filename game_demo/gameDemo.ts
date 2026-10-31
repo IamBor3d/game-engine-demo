@@ -1,6 +1,7 @@
 import { BaseGame } from "@/game_engine/BaseGame";
 import { InputManager } from "@/game_engine/InputManager";
 import { Player } from "./player";
+import { Enemy } from "./enemy";
 export class GameDemo extends BaseGame
 {   
     private input = new InputManager()
@@ -11,7 +12,7 @@ export class GameDemo extends BaseGame
     start()
     {
         super.start();
-        this.objects.push(new Player(50,50,this.input));
+        this.objects.push(new Player(50,50,this.input), new Enemy(200,200));
         requestAnimationFrame(this.loop)
     }
 
