@@ -12,7 +12,9 @@ export class GameDemo extends BaseGame
     start()
     {
         super.start();
-        this.objects.push(new Player(50,50,this.input), new Enemy(200,200));
+        const player : Player = new Player(50,50,this.input);
+        let enemy : Enemy = new Enemy(200,200,player)
+        this.objects.push(player, enemy);
         requestAnimationFrame(this.loop)
     }
 

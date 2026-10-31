@@ -1,14 +1,15 @@
 import { BasicObject} from "@/game_engine/BasicObject";
 import { BaseGame } from "@/game_engine/BaseGame";
-import { Game } from "@/game_engine/Game";
 
 export class Enemy extends BasicObject{
 
-    constructor(x :number, y :number) {
+    private target : BasicObject 
+    constructor(x :number, y :number, target : BasicObject) {
         super(x,y,50,50);
+        this.target = target;
     }
 
-    update(game: Game, dt: number): void {
+    update(game: BaseGame, dt: number): void {
         
     }
 
