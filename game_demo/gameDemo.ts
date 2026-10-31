@@ -2,11 +2,14 @@ import { BaseGame } from "@/game_engine/BaseGame";
 import { InputManager } from "@/game_engine/InputManager";
 import { Player } from "./player";
 import { Enemy } from "./enemy";
+import { Grid } from "./grid";
 export class GameDemo extends BaseGame
 {   
     private input = new InputManager()
+    private grid : Grid | null = null
     constructor(canvasHeight: number , canvasWidth: number, canvas : HTMLCanvasElement){
         super(canvasHeight, canvasWidth, canvas);
+
     }
 
     start()
@@ -15,6 +18,8 @@ export class GameDemo extends BaseGame
         const player : Player = new Player(50,50,this.input);
         let enemy : Enemy = new Enemy(200,200,player)
         this.objects.push(player, enemy);
+
+        this.grid = new Grid(this.canvasWidth, this.canvasHeight,this.objects);
         requestAnimationFrame(this.loop)
     }
 
@@ -28,7 +33,7 @@ export class GameDemo extends BaseGame
 
         this.objects.forEach(e=> e.update(this,dt));
         this.objects.forEach(e => e.draw(this.ctx));
-
+        this.grid?.drawGrid(this.ctx)
         requestAnimationFrame(this.loop);
     }
 
