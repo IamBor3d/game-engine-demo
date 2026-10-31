@@ -16,7 +16,6 @@ export default function Game(){
         
         const canvas = canvasRef.current;
         if (!canvas || dimensions.width === 0) return;
-
         const game = new GameDemo(dimensions.height,dimensions.width, canvas);
         game.start();
         return ()=>game.destroy();
