@@ -30,7 +30,7 @@ export class Player extends BasicObject{
         }
 
         if(this.input.isKeyDown(KeyConsts.S) &&
-        !(this.pos.y >= 1080)){
+        !(this.pos.y >= game.getCanvasHeight() - this.height)){
             this.pos.y += this.speed *dt;
         }
     }
