@@ -1,8 +1,35 @@
 import { BasicObject } from "@/game_engine/BasicObject";
+import { ParamHTMLAttributes } from "react";
 
-export type Node = {
-    walkable: boolean;
-};
+export type PathNode = Node | null
+
+export class Node {
+
+    private walkable :boolean;
+    private parent : PathNode;
+    private hCost : number;
+    private gCost : number;
+
+    constructor(walkable : boolean, parent : PathNode )
+    {
+        this.walkable = walkable;
+        this.parent = parent;
+
+        this.gCost = Number.MAX_SAFE_INTEGER;
+        this.hCost = Number.MAX_SAFE_INTEGER;
+
+    }
+
+    fCost() : number {return this.hCost + this.gCost;}
+
+    setParent(parent : PathNode){this.parent = parent;}
+
+    getGCost() : number {return this.gCost;} //distanceFromStart
+    getHCost() : number {return this.hCost;} //distanceToTarget
+    setWalkable(walkable : boolean) : void {this.walkable = walkable;}
+    getParent() : PathNode {return this.parent;}
+    getWalkable() : boolean { return this.walkable;}
+}
 
 export class Grid {
     private grid: Node[][] = [];
@@ -35,7 +62,7 @@ export class Grid {
 
         // Ensure indices are within bounds before accessing
         if (nodeX >= 0 && nodeX < this.gridSizeX && nodeY >= 0 && nodeY < this.gridSizeY) {
-            this.grid[nodeX][nodeY] = { walkable: false };
+            this.grid[nodeX][nodeY].setWalkable(false);
         }
     }
 
@@ -44,7 +71,7 @@ export class Grid {
         for (let x = 0; x < this.gridSizeX; x++) {
             this.grid[x] = [];
             for (let y = 0; y < this.gridSizeY; y++) {
-                this.grid[x][y] = { walkable: true };
+                this.grid[x][y]= new Node(true, null );
             }
         }
         
@@ -64,7 +91,7 @@ export class Grid {
     drawGrid(ctx: CanvasRenderingContext2D) {
         for (let x = 0; x < this.gridSizeX; x++) {
             for (let y = 0; y < this.gridSizeY; y++) {
-                ctx.fillStyle = this.grid[x][y].walkable ? "rgba(0,255,0,0.5" : "rgba(255, 0, 0, 0.5)";
+                ctx.fillStyle = this.grid[x][y].getWalkable() ? "rgba(0,255,0,0.5" : "rgba(255, 0, 0, 0.5)";
 
                 // Direct mapping since (0,0) is top-left
                 let worldX = x * this.nodeSize;
